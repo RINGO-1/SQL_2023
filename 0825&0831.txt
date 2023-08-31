@@ -1,0 +1,93 @@
+-- 도서정보 book 테이블
+create table book(
+    bookid NUMBER(2) primary key,
+    bookname VARCHAR2(40),
+    publisher VARCHAR2(40),
+    price NUMBER(8)
+);
+-- 수입도서정보 imported_book 테이블
+create table imported_book(
+    bookid NUMBER(2),
+    bookname VARCHAR2(40),
+    publisher VARCHAR2(40),
+    price NUMBER(8)
+);
+
+-- 고객정보 customer 테이블
+create table customer(
+    custid NUMBER(2) PRIMARY KEY,
+    name VARCHAR2(40),
+    address VARCHAR2(50),
+    phone VARCHAR2(20)
+);
+-- 주문정보 orders 테이블
+create table orders(
+    orderid NUMBER(2) PRIMARY KEY,
+    custid NUMBER(2) REFERENCES customer(custid),
+    bookid NUMBER(2) REFERENCES book(bookid),
+    saleprice NUMBER(8),
+    orderdate DATE
+);
+
+-- book 테이블에 10권의 도서 정보를 추가
+insert into book VALUES(1, '수학의 정석', '성지출판', 13000); 
+insert into book VALUES(2, '슈퍼노멀', '웅진지식하우스', 17000); 
+insert into book VALUES(3, '아메리칸 프로메테우스', '사이언스북스', 22000); 
+insert into book VALUES(4, '최소한의 한국사', '프런트페이지', 16000); 
+insert into book VALUES(5, '세이노의 가르침', '데이원', 6500); 
+insert into book VALUES(6, '아주 희미한 빛으로도', '문학동네', 15200); 
+insert into book VALUES(7, '도둑맞은 집중력', '어크로스', 16900); 
+insert into book VALUES(8, '역행자', '웅진지식하우스', 17500); 
+insert into book VALUES(9, '코스모스', '사이언스북스', 17900); 
+insert into book VALUES(10, '총 균 쇠', '김영사', 26800); 
+
+-- customer 테이블에 고객정보 5명 추가
+insert into customer VALUES(1, '박지성', '영국 맨체스터', '000-5000-001');
+insert into customer VALUES(2, '김연아', '서울 동작구', '02-333-5555');
+insert into customer VALUES(3, '장미란', '서울 용산구', '02-555-7777');
+insert into customer VALUES(4, '추신수', '인천광역시 연수구', '032-233-5656');
+insert into customer VALUES(5, '박세리', '대전광역시 유성구', '042-322-1237');
+
+insert into orders values (1, 1, 1, 6000, to_date('2023-07-01', 'yyyy-mm-dd'));
+insert into orders values (2, 1, 3, 21000, to_date('2023-07-03', 'yyyy-mm-dd'));
+insert into orders values (3, 2, 5, 8000, to_date('2023-07-03', 'yyyy-mm-dd'));
+insert into orders values (4, 3, 6, 6000, to_date('2023-07-04', 'yyyy-mm-dd'));
+insert into orders values (5, 4, 7, 20000, to_date('2023-07-01', 'yyyy-mm-dd'));
+insert into orders values (6, 1, 2, 12000, to_date('2023-07-01', 'yyyy-mm-dd'));
+insert into orders values (7, 4, 8, 13000, to_date('2023-07-01', 'yyyy-mm-dd'));
+insert into orders values (8, 3, 10, 12000, to_date('2023-07-01', 'yyyy-mm-dd'));
+insert into orders values (9, 2, 10, 7000, to_date('2023-07-09', 'yyyy-mm-dd'));
+insert into orders values (10, 3, 8, 13000, to_date('2023-07-10', 'yyyy-mm-dd'));
+
+insert into imported_book VALUES(21, 'Zen Golf', 'Person', 12000);
+insert into imported_book VALUES(21, 'Soccer Skills', 'Human Kinetics', 15000);
+
+SELECT publisher, price from book
+where bookname like '세이노의 가르침';
+
+SELECT phone from customer
+    where name='김연아';
+    
+SELECT * from customer
+    where name='김연아';
+    
+SELECT price, bookname from book;
+
+SELECT * from book;
+
+SELECT DISTINCT publisher from book;
+
+SELECT *
+FROM book
+WHERE price<20000;
+
+SELECT * from book where publisher in ('성지출판', '웅진지식하우스');  
+
+select *
+from book where price < 16000 and price >10000
+
+select * from book where publisher '성지출판';
+
+select * from book where publisher not in ('성지출판', '웅진지식하우스');
+
+select * from book where publisher <>
